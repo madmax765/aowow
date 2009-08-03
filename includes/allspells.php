@@ -340,8 +340,10 @@ function spell_desc2($spellRow, $type='tooltip')
 
 	$data = $spellRow[$type.'_loc'.$_SESSION['locale']];
 
-	if(!$data && $type == 'tooltip')
-		return '_empty_';
+	// Конец строк
+	$data = nl2br($data);
+	// Цвета
+	$data = preg_replace('/\|cff([a-f0-9]{6})(.+)\|r/i', '<span style="color: #$1;">$2</span>', $data);
 
 	$pos = 0;
 	$str = '';
@@ -886,7 +888,7 @@ function spell_buff_render($row)
 	$x = '<table><tr>';
 	
 	// Имя баффа
-	$x .= '<td><b class="q">'.$row['spellname'].'</b></td>';
+	$x .= '<td><b class="q">'.$row['spellname_loc'.$_SESSION['locale']].'</b></td>';
 	
 	// Тип диспела
 	if($row['dispeltypeID'])

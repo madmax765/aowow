@@ -129,7 +129,8 @@ if(!$spell = load_cache(13, $cache_key))
 		$i=0;
 		$spell['effect'] = array();
 		// Btt - Buff TollTip
-		if($row['buff'])
+		// FIXME: Найти флаг в DBC
+		if(strlen($row['buff_loc'.$_SESSION['locale']]) > 0)
 			$spell['btt'] = spell_buff_render($row);
 		for ($j=1;$j<=3;$j++)
 		{

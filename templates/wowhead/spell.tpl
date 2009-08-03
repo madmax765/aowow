@@ -42,7 +42,7 @@
 			</script>
 
 			{if isset($spell.btt)}
-			<h3>Buff</h3>
+			<h3>{#Aura#}</h3>
 			<div id="btt{$spell.entry}" class="tooltip">
 				<table><tr><td>{$spell.btt}</td><th style="background-position: top right"></th></tr><tr><th style="background-position: bottom left"></th><th style="background-position: bottom right"></th></tr></table>
 			</div>
