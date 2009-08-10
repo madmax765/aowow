@@ -16,7 +16,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$item = load_cache(5, $cache_key))
+if(!$item = load_cache(ITEM_PAGE, $cache_key))
 {
 	unset($item);
 
@@ -612,7 +612,7 @@ if(!$item = load_cache(5, $cache_key))
 		}
 	}
 
-	save_cache(5, $cache_key, $item);
+	save_cache(ITEM_PAGE, $cache_key, $item);
 }
 global $page;
 $page = array(

@@ -6,7 +6,7 @@ $smarty->config_load($conf_file, 'object');
 
 $cache_key = cache_key($type);
 
-if(!$data = load_cache(4, $cache_key))
+if(!$data = load_cache(OBJECT_LISTING, $cache_key))
 {
 	unset($data);
 
@@ -62,7 +62,7 @@ if(!$data = load_cache(4, $cache_key))
 		$data[$i]['type'] = isset($type) ? $type : $row['type'];
 		$i++;
 	}
-	save_cache(4, $cache_key, $data);
+	save_cache(OBJECT_LISTING, $cache_key, $data);
 }
 global $page;
 $page = array(

@@ -77,6 +77,7 @@ $locale_quest_cols = array('Title_loc'.$AoWoWconf['locale'], 'Details_loc'.$AoWo
 
 function QuestReplaceStr($STR)
 {
+	// TODO: REVAMP THIS AWFUL FUNCTION !!! Omg it's pure crap
 	global $smarty;
 	// сначала заменяем $N, $R, $C
 	$toreplace = array (
@@ -85,8 +86,10 @@ function QuestReplaceStr($STR)
 		2=>array('1'=>'$c', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('class') : 'class' ).'&gt;',),
 		3=>array('1'=>'$n', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('name')  : 'name'  ).'&gt;',),
 		4=>array('1'=>'$G', '2'=>'$g',),
+		5=>array('1'=>"\r", '2'=>'',),
+		6=>array('1'=>"\n", '2'=>'',),
 	);
-	for($i=0;$i<=3;$i++)
+	for($i=0;$i<=6;$i++)
 	{
 		$STR = str_replace($toreplace[$i][1], $toreplace[$i][2], $STR);
 		$STR = str_replace(strtoupper($toreplace[$i][1]), $toreplace[$i][2], $STR);
@@ -403,9 +406,10 @@ function GetQuestInfo(&$data, $dataflag = QUEST_DATAFLAG_MINIMUM)
 	}*/
 
 	// Локализация
-	$loc = $_SESSION['locale'];
 	if($dataflag & QUEST_DATAFLAG_LOCALE && $_SESSION['locale'] > 0)
-		$data = array_merge($data, $DB->selectRow('
+	{
+		$loc = $_SESSION['locale'];
+		$row = $DB->selectRow('
 				SELECT
 					Title_loc?d AS Title_loc,
 					Details_loc?d AS Details_loc,
@@ -423,7 +427,14 @@ function GetQuestInfo(&$data, $dataflag = QUEST_DATAFLAG_MINIMUM)
 			',
 			$loc, $loc, $loc, $loc, $loc, $loc, $loc, $loc, $loc, $loc,
 			$data['entry']
-		));
+		);
+
+		if($row)
+		{
+			foreach($row as $key => $value)
+				$data[$key] = QuestReplaceStr($value);
+		}
+	}
 	// Минимальные данные
 	// ID квеста
 	$data['entry'] = $data['entry'];

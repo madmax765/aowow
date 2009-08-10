@@ -6,7 +6,7 @@ $smarty->config_load($conf_file, 'itemset');
 
 $cache_key = cache_key();
 
-if(!$itemsets = load_cache(9, $cache_key))
+if(!$itemsets = load_cache(ITEMSET_LISTING, $cache_key))
 {
 	unset($itemsets);
 
@@ -23,7 +23,7 @@ if(!$itemsets = load_cache(9, $cache_key))
 	foreach($rows as $row)
 		$itemsets[] = itemsetinfo2($row);
 
-	save_cache(9, $cache_key, $itemsets);
+	save_cache(ITEMSET_LISTING, $cache_key, $itemsets);
 }
 $smarty->assign('itemsets', $itemsets);
 

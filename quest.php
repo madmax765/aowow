@@ -14,7 +14,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$quest = load_cache(10, $cache_key))
+if(!$quest = load_cache(QUEST_PAGE, $cache_key))
 {
 	unset($quest);
 
@@ -535,7 +535,7 @@ if(!$quest = load_cache(10, $cache_key))
 	if ($quest['RewMailDelaySecs'])
 		$quest['maildelay'] = sec_to_time($quest['RewMailDelaySecs']);
 
-	save_cache(10, $cache_key, $quest);
+	save_cache(QUEST_PAGE, $cache_key, $quest);
 }
 
 global $page;

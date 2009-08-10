@@ -13,7 +13,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$npc = load_cache(1, $cache_key))
+if(!$npc = load_cache(NPC_PAGE, $cache_key))
 {
 	unset($npc);
 
@@ -387,7 +387,7 @@ if(!$npc = load_cache(1, $cache_key))
 			// мы - нормал НПС или НПС без сложности
 			$npc['position'] = position($npc['entry'], 'creature', 1);
 
-		save_cache(1, $cache_key, $npc);
+		save_cache(NPC_PAGE, $cache_key, $npc);
 	}
 }
 

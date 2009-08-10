@@ -8,7 +8,7 @@ $smarty->config_load($conf_file, 'spell');
 
 $cache_key = cache_key($s1, $s2, $s3);
 
-if(!$spells = load_cache(15, $cache_key))
+if(!$spells = load_cache(SPELL_LISTING, $cache_key))
 {
 	unset($spells);
 
@@ -195,7 +195,7 @@ if(!$spells = load_cache(15, $cache_key))
 	foreach($rows as $i => $row)
 		$spells['data'][] = spellinfo2($row);
 
-	save_cache(15, $cache_key, $spells);
+	save_cache(SPELL_LISTING, $cache_key, $spells);
 }
 global $page;
 $page = array(

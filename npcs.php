@@ -9,7 +9,7 @@ $smarty->config_load($conf_file, 'npc');
 
 $cache_key = cache_key($type);
 
-if(!$npcs = load_cache(2, $cache_key))
+if(!$npcs = load_cache(NPC_LISTING, $cache_key))
 {
 	unset($npcs);
 
@@ -38,7 +38,7 @@ if(!$npcs = load_cache(2, $cache_key))
 	$npcs = array();
 	foreach($rows as $row)
 		$npcs[] = creatureinfo2($row);
-	save_cache(5, $cache_key, $npcs);
+	save_cache(NPC_LISTING, $cache_key, $npcs);
 }
 
 global $page;

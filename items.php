@@ -10,7 +10,7 @@ $smarty->config_load($conf_file, 'items');
 
 $cache_key = cache_key($class, $subclass, $type);
 
-if(!$items = load_cache(7, $cache_key))
+if(!$items = load_cache(ITEM_LISTING, $cache_key))
 {
 	unset($items);
 
@@ -41,7 +41,7 @@ if(!$items = load_cache(7, $cache_key))
 	foreach($rows as $row)
 		$items[] = iteminfo2($row);
 
-	save_cache(7, $cache_key, $items);
+	save_cache(ITEM_LISTING, $cache_key, $items);
 }
 
 global $page;

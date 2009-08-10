@@ -19,11 +19,11 @@ $x = '';
 switch($what)
 {
 	case 'item':
-		if(!$item = load_cache(6, $id))
+		if(!$item = load_cache(ITEM_TOOLTIP, $id))
 		{
 			require_once('includes/allitems.php');
 			$item = allitemsinfo($id, 1);
-			save_cache(6, $id, $item);
+			save_cache(ITEM_TOOLTIP, $id, $item);
 		}
 		$x .= '$WowheadPower.registerItem('.$id.', '.$_SESSION['locale'].', {';
 		if ($item['name'])
@@ -37,11 +37,11 @@ switch($what)
 		$x .= '});';
 		break;
 	case 'spell':
-		if(!$spell = load_cache(14, $id))
+		if(!$spell = load_cache(SPELL_TOOLTIP, $id))
 		{
 			require_once('includes/allspells.php');
 			$spell = allspellsinfo($id, 1);
-			save_cache(14, $id, $spell);
+			save_cache(SPELL_TOOLTIP, $id, $spell);
 		}
 		$x .= '$WowheadPower.registerSpell('.$id.', '.$_SESSION['locale'].',{';
 		if ($spell['name'])
@@ -53,12 +53,12 @@ switch($what)
 		$x .= '});';
 		break;
 	case 'quest':
-		if(!$quest = load_cache(11, $id))
+		if(!$quest = load_cache(QUEST_TOOLTIP, $id))
 		{
 			require_once('includes/allquests.php');
 			$quest = GetDBQuestInfo($id, QUEST_DATAFLAG_AJAXTOOLTIP);
 			$quest['tooltip'] = GetQuestTooltip($quest);
-			save_cache(11, $id, $quest);
+			save_cache(QUEST_TOOLTIP, $id, $quest);
 		}
 		$x .= '$WowheadPower.registerQuest('.$id.', '.$_SESSION['locale'].',{';
 		if($quest['name'])
@@ -68,11 +68,11 @@ switch($what)
 		$x .= '});';
 		break;
 	case 'achievement':
-		if(!$achievement = load_cache(23, $id))
+		if(!$achievement = load_cache(ACHIEVEMENT_TOOLTIP, $id))
 		{
 			require_once('includes/allachievements.php');
 			$achievement = allachievementsinfo($id, 1);
-			save_cache(23, $id, $achievement);
+			save_cache(ACHIEVEMENT_TOOLTIP, $id, $achievement);
 		}
 		$x .= '$WowheadPower.registerAchievement('.$id.', '.$_SESSION['locale'].',{';
 		$x .= 'name_'.$locales[$_SESSION['locale']].': \''.ajax_str_normalize($achievement['name']).'\',';

@@ -1,6 +1,7 @@
 <?php
-define('AOWOW_REVISION', 9);
+define('AOWOW_REVISION', 10);
 
+/* ================ LOADING ================ */
 require_once('configs/config.php');
 error_reporting(2039);
 ini_set('serialize_precision', 4);
@@ -22,10 +23,11 @@ function checklocale()
 		$_SESSION['locale'] = $AoWoWconf['locale'];
 }
 checklocale();
-
 // Это должно быть ПОСЛЕ checklocale()
 require_once('includes/alllocales.php');
 
+
+/* ================ MISC FUNCTIONS ================ */
 function str_normalize($str)
 {
 	return str_replace("'", "\'", $str);
@@ -263,120 +265,6 @@ function sum_subarrays_by_key( $tab, $key ) {
 	}
 	return $sum;
 }
-// КЕШИРОВАНИЕ // PRECACHING
-/*
-Содержание файла:
-=========================
-cache_delete_timestamp
-serialized data
-serialized allitems
-serialized allspells
-=========================
-*/
-$cache_types = array(
-	1	=> 'npc_page',
-	2	=> 'npc_listing',
-
-	3	=> 'object_page',
-	4	=> 'object_listing',
-
-	5	=> 'item_page',
-	6	=> 'item_tooltip',
-	7	=> 'item_listing',
-
-	8	=> 'itemset_page',
-	9	=> 'itemset_listing',
-
-	10	=> 'quest_page',
-	11	=> 'quest_tooltip',
-	12	=> 'quest_listing',
-
-	13	=> 'spell_page',
-	14	=> 'spell_tooltip',
-	15	=> 'spell_listing',
-
-	16	=> 'zone_page',
-	17	=> 'zone_listing',
-
-	18	=> 'faction_page',
-	19	=> 'faction_listing',
-
-	20	=> 'talent_data',
-	21	=> 'talent_icon',
-
-	22	=> 'achievement_page',
-	23	=> 'achievement_tooltip',
-	24	=> 'achievement_listing',
-
-	25	=> 'glyphs',
-);
-function save_cache($type, $type_id, $data, $prefix = '')
-{
-	global $cache_types, $allitems, $allspells, $allachievements, $AoWoWconf;
-
-	if($AoWoWconf['debug'])
-		return;
-
-	$type_str = $cache_types[$type];
-
-	$cache_data = '';
-
-	if(empty($type_str))
-		return false;
-
-	// {$type_str}_{$type_id}.aww
-	$file = $prefix.'cache/mangos/'.$type_str.'_'.$type_id.'_'.($type_id == 21 ? 0 : $_SESSION['locale']).'.aww';
-
-	$time = time()+$AoWoWconf['aowow']['cache_time'];
-
-	if(!$file)
-		return false;
-
-	// записываем дату и ревизию в файл
-	$cache_data .= $time.' '.AOWOW_REVISION;
-	$cache_data .= "\n".serialize($data)."\n";
-
-	$cache_data .= serialize($allitems);
-	$cache_data .= "\n";
-	$cache_data .= serialize($allspells);
-	$cache_data .= "\n";
-	$cache_data .= serialize($allachievements);
-
-	file_put_contents($file, $cache_data);
-	
-	return true;
-}
-function load_cache($type, $type_id, $prefix = '')
-{
-	global $cache_types, $smarty, $allitems, $allspells, $allachievements, $AoWoWconf;
-
-	if($AoWoWconf['debug'])
-		return false;
-
-	$type_str = $cache_types[$type];
-
-	if(empty($type_str))
-		return false;
-
-	$data = @file_get_contents($prefix.'cache/mangos/'.$type_str.'_'.$type_id.'_'.($type_id == 21 ? 0 : $_SESSION['locale']).'.aww');
-	if(!$data)
-		return false;
-
-	$data = explode("\n", $data);
-
-	@list($time, $rev) = explode(' ', $data[0]);
-	if($time < time() || $rev < AOWOW_REVISION)
-		return false;
-
-	if($data[2])
-		$allitems = unserialize($data[2]);
-	if($data[3])
-		$allspells = unserialize($data[3]);
-	if($data[4])
-		$allachievements = unserialize($data[4]);
-
-	return unserialize($data[1]);
-}
 function SideByRace($race)
 {
 	switch ($race)
@@ -399,12 +287,29 @@ function ajax_str_normalize($string)
 	return strtr($string, array('\\'=>'\\\\',"'"=>"\\'",'"'=>'\\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
 }
 
+function is_single_array($arr)
+{
+	if(!is_array($arr))
+		return false;
+
+	$i = 0;
+	foreach($arr as $key => $value)
+	{
+		if($key != $i)
+			return false;
+
+		++$i;
+	}
+
+	return true;
+}
+
 function php2js($data)
 {
-	if (is_array($data))
+	if(is_array($data))
 	{
 		// Массив
-		if (array_key_exists (0,$data))
+		if(is_single_array($data))
 		{
 			// Простой массив []
 			$ret = "[";
@@ -414,37 +319,40 @@ function php2js($data)
 				if(!$first) $ret .= ',';
 				$ret .= php2js($obj);
 				$first = false;
-			}			
+			}
 			$ret .= "]";
-		} else {
+		}
+		else
+		{
 			// Ассоциативный массив {}
-			$ret = "{";
+			$ret = '{';
 			$first = true;
-			foreach ($data as $key => $obj)
+			foreach($data as $key => $obj)
 			{
 				if(!$first) $ret .= ',';
-				$ret .= $key.':'.php2js($obj)."";
+				$ret .= $key.':'.php2js($obj);
 				$first = false;
-			}			
-			$ret .= "}";
+			}
+			$ret .= '}';
 		}
-	} else {
-		// Просто значение
-		$ret = is_string($data)? "'".str_replace("\n", "<br>", str_normalize($data))."'" : $data;
 	}
+	else
+		// Просто значение
+		$ret = is_string($data) ? ("'".nl2br(str_normalize($data))."'") : $data;
+
 	return $ret;
 }
 // from php.net
-function imagetograyscale($im)
+function imagetograyscale($img)
 {
-    if (imageistruecolor($im)) {
-        imagetruecolortopalette($im, false, 256);
-    }
+    if(imageistruecolor($img))
+        imagetruecolortopalette($img, false, 256);
 
-    for ($c = 0; $c < imagecolorstotal($im); $c++) {
-        $col = imagecolorsforindex($im, $c);
-        $gray = round(0.299 * $col['red'] + 0.587 * $col['green'] + 0.114 * $col['blue']);
-        imagecolorset($im, $c, $gray, $gray, $gray);
+    for($i = 0; $i < imagecolorstotal($img); $i++)
+	{
+        $color = imagecolorsforindex($img, $i);
+        $gray = round(0.299 * $color['red'] + 0.587 * $color['green'] + 0.114 * $color['blue']);
+        imagecolorset($img, $i, $gray, $gray, $gray);
     }
 }
 function path($tab, $category)
@@ -523,5 +431,111 @@ function localizedName($arr, $key = 'name')
 	}
 	else
 		return $arr[$lkey];
+}
+/* ================ CACHE ================ */
+$cache_types = array(
+	//    name                  multilocale
+	array('npc_page',			false			),
+	array('npc_listing',		false			),
+
+	array('object_page',		false			),
+	array('object_listing',		false			),
+
+	array('item_page',			false			),
+	array('item_tooltip',		false			),
+	array('item_listing',		false			),
+
+	array('itemset_page',		false			),
+	array('itemset_listing',	false			),
+
+	array('quest_page',			false			),
+	array('quest_tooltip',		false			),
+	array('quest_listing',		false			),
+
+	array('spell_page',			false			),
+	array('spell_tooltip',		false			),
+	array('spell_listing',		false			),
+
+	array('zone_page',			false			),
+	array('zone_listing',		false			),
+
+	array('faction_page',		false			),
+	array('faction_listing',	false			),
+
+	array('talent_data',		false			),
+	array('talent_icon',		true			),
+
+	array('achievement_page',	false			),
+	array('achievement_tooltip',false			),
+	array('achievement_listing',false			),
+
+	array('glyphs',				false			),
+);
+foreach($cache_types as $id => $cType)
+{
+	define(strtoupper($cType[0]), $id);
+}
+function save_cache($type, $type_id, $data, $prefix = '')
+{
+	global $cache_types, $allitems, $allspells, $allachievements, $AoWoWconf;
+
+	if($AoWoWconf['debug'])
+		return;
+
+	$type_str = $cache_types[$type][0];
+
+	$cache_data = '';
+
+	if(empty($type_str))
+		return;
+
+	$file = $prefix.'cache/mangos/'.$type_str.'_'.$type_id.($cache_types[$type][1] ? '' : '_'.$_SESSION['locale']).'.aww';
+
+	if(!$file)
+		return;
+
+	// записываем дату и ревизию в файл
+	$cache_data .= time().' '.AOWOW_REVISION;
+	$cache_data .= "\n".serialize($data)."\n";
+
+	$cache_data .= serialize($allitems);
+	$cache_data .= "\n";
+	$cache_data .= serialize($allspells);
+	$cache_data .= "\n";
+	$cache_data .= serialize($allachievements);
+
+	file_put_contents($file, $cache_data);
+}
+function load_cache($type, $type_id, $prefix = '')
+{
+	global $cache_types, $smarty, $allitems, $allspells, $allachievements, $AoWoWconf;
+
+	if($AoWoWconf['debug'])
+		return false;
+
+	$type_str = $cache_types[$type][0];
+
+	if(empty($type_str))
+		return false;
+
+	$data = @file_get_contents($prefix.'cache/mangos/'.$type_str.'_'.$type_id.($cache_types[$type][1] ? '' : '_'.$_SESSION['locale']).'.aww');
+	if(!$data)
+		return false;
+
+	$data = explode("\n", $data);
+
+	@list($time, $rev) = explode(' ', $data[0]);
+	$expire_time = $time + $AoWoWconf['aowow']['cache_time'];
+	if($expire_time <= time() || $rev < AOWOW_REVISION)
+		return false;
+
+	if($data[2])
+		$allitems = unserialize($data[2]);
+	if($data[3])
+		$allspells = unserialize($data[3]);
+	if($data[4])
+		$allachievements = unserialize($data[4]);
+
+	return unserialize($data[1]);
 }
 ?>

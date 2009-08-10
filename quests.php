@@ -10,7 +10,7 @@ $smarty->config_load($conf_file, 'quest');
 
 $cache_key = cache_key($Type, $ZoneOrSort);
 
-if(!$quests = load_cache(12, $cache_key))
+if(!$quests = load_cache(QUEST_LISTING, $cache_key))
 {
 	unset($quests);
 
@@ -40,7 +40,7 @@ if(!$quests = load_cache(12, $cache_key))
 	foreach($rows as $row)
 		$quests[] = GetQuestInfo($row, QUEST_DATAFLAG_LISTINGS);
 
-	save_cache(12, $cache_key, $quests);
+	save_cache(QUEST_LISTING, $cache_key, $quests);
 }
 global $page;
 $page = array(

@@ -7,7 +7,7 @@ $smarty->config_load($conf_file, 'achievement');
 
 $cache_key = cache_key($category);
 
-if(!$achievements = load_cache(24, $cache_key))
+if(!$achievements = load_cache(ACHIEVEMENT_LISTING, $cache_key))
 {
 	unset($achievements);
 
@@ -54,7 +54,7 @@ if(!$achievements = load_cache(24, $cache_key))
 			}
 		}
 
-		save_cache(24, $cache_key, $achievements);
+		save_cache(ACHIEVEMENT_LISTING, $cache_key, $achievements);
 	}
 }
 global $page;

@@ -18,7 +18,7 @@ switch($_GET['data'])
 		if(!in_array($class, array_keys($classes)))
 			exit;
 
-		if(!$p_arr = load_cache(20, $class))
+		if(!$p_arr = load_cache(TALENT_DATA, $class))
 		{
 			unset($p_arr);
 
@@ -93,12 +93,12 @@ switch($_GET['data'])
 				$i++;
 			}
 
-			save_cache(20, $class, $p_arr);
+			save_cache(TALENT_DATA, $class, $p_arr);
 		}
 		echo '$WowheadTalentCalculator.registerClass('.$class.', '.php2js($p_arr).')';
 		break;
 	case 'glyphs':
-		if(!$g_glyphs = load_cache(25, 'x'))
+		if(!$g_glyphs = load_cache(GLYPHS, 'x'))
 		{
 			/*
 				name - Имя вещи
@@ -143,7 +143,7 @@ switch($_GET['data'])
 				);
 			}
 
-			save_cache(25, 'x', $g_glyphs);
+			save_cache(GLYPHS, 'x', $g_glyphs);
 		}
 		echo 'var g_glyphs='.php2js($g_glyphs);
 		break;
@@ -152,7 +152,7 @@ switch($_GET['data'])
 		if(!$DB->selectCell('SELECT 1 FROM ?_spellicons WHERE iconname = ?', $iconname))
 			exit;
 
-		if($name = load_cache(21, $iconname))
+		if($name = load_cache(TALENT_ICON, $iconname))
 		{
 			header('Content-type: image/jpeg');
 			imagejpeg(imagecreatefromjpeg('cache/images/'.$iconname.'.jpg'));
@@ -168,7 +168,7 @@ switch($_GET['data'])
 			imagetograyscale($im);
 			imagejpeg($im, 'cache/images/'.$iconname.'.jpg');
 			imagejpeg($im);
-			save_cache(21, $iconname, $iconname);
+			save_cache(TALENT_ICON, $iconname, $iconname);
 		}
 		break;
 	default:

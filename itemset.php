@@ -9,7 +9,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$itemset = load_cache(8, $cache_key))
+if(!$itemset = load_cache(ITEMSET_PAGE, $cache_key))
 {
 	unset($itemset);
 
@@ -60,7 +60,7 @@ if(!$itemset = load_cache(8, $cache_key))
 					$itemset['spells'][$j] = $tmp;
 				}
 	}
-	save_cache(8, $cache_key, $itemset);
+	save_cache(ITEMSET_PAGE, $cache_key, $itemset);
 }
 $smarty->assign('itemset', $itemset);
 

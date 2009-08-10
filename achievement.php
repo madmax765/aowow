@@ -10,7 +10,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$achievement = load_cache(22, $cache_key))
+if(!$achievement = load_cache(ACHIEVEMENT_PAGE, $cache_key))
 {
 	unset($achievement);
 
@@ -303,7 +303,7 @@ if(!$achievement = load_cache(22, $cache_key))
 		if(count($achievement['series']) <= 1)
 			unset($achievement['series']);
 
-		save_cache(22, $cache_key, $achievement);
+		save_cache(ACHIEVEMENT_PAGE, $cache_key, $achievement);
 	}
 }
 global $page;

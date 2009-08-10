@@ -13,7 +13,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$spell = load_cache(13, $cache_key))
+if(!$spell = load_cache(SPELL_PAGE, $cache_key))
 {
 	unset($spell);
 
@@ -562,7 +562,7 @@ if(!$spell = load_cache(13, $cache_key))
 			}
 		}
 
-		save_cache(13, $cache_key, $spell);
+		save_cache(SPELL_PAGE, $cache_key, $spell);
 	}
 }
 

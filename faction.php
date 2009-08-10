@@ -13,8 +13,9 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$faction = load_cache(18, $cache_key))
+if(!$faction = load_cache(FACTION_PAGE, $cache_key))
 {
+	print_r($faction);
 	unset($faction);
 
 	$row = $DB->selectRow('
@@ -144,8 +145,7 @@ if(!$faction = load_cache(18, $cache_key))
 			}
 		}
 
-		// Faction cache
-		save_cache(18, $cache_key, $faction);
+		save_cache(FACTION_PAGE, $cache_key, $faction);
 	}
 }
 

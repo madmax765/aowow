@@ -7,7 +7,7 @@ $category = $c2 ? $c2 : $c1;
 
 $cache_key = cache_key($category);
 
-if(!$factions = load_cache(19, $cache_key))
+if(!$factions = load_cache(FACTION_LISTING, $cache_key))
 {
 	unset($factions);
 
@@ -48,7 +48,7 @@ if(!$factions = load_cache(19, $cache_key))
 		));
 	}
 
-	save_cache(19, $cache_key, $factions);
+	save_cache(FACTION_LISTING, $cache_key, $factions);
 }
 
 global $page;

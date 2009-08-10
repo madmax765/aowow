@@ -13,7 +13,7 @@ $id = intval($podrazdel);
 
 $cache_key = cache_key($id);
 
-if(!$object = load_cache(3, $cache_key))
+if(!$object = load_cache(OBJECT_PAGE, $cache_key))
 {
 	unset($object);
 
@@ -91,7 +91,7 @@ if(!$object = load_cache(3, $cache_key))
 	// Положения объектофф:
 	$object['position'] = position($object['entry'], 'gameobject');
 
-	save_cache(3, $cache_key, $object);
+	save_cache(OBJECT_PAGE, $cache_key, $object);
 }
 
 global $page;
