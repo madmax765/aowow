@@ -341,7 +341,7 @@ function spell_desc2($spellRow, $type='tooltip')
 	$data = $spellRow[$type.'_loc'.$_SESSION['locale']];
 
 	// Конец строк
-	$data = nl2br($data);
+	$data = strtr($data, array("\r" => '', "\n" => "<br />"));
 	// Цвета
 	$data = preg_replace('/\|cff([a-f0-9]{6})(.+)\|r/i', '<span style="color: #$1;">$2</span>', $data);
 
