@@ -32,7 +32,8 @@ function tc_init() {
 	ae(c, a);
 	tc_object = new TalentCalc();
 	tc_object.initialize("tc-itself", {
-		onChange: tc_onChange
+		onChange: tc_onChange,
+		noAd: 1
 	});
 	tc_readPound();
 	setInterval(tc_readPound, 1000)
