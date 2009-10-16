@@ -4,6 +4,9 @@ switch($_SESSION['locale'])
 	// --- RUSSIAN LOCALE ---
 	case '8':
 		mass_define(array(
+			'LOCALE_NAME'	=> 'имя',
+			'LOCALE_CLASS'	=> 'класс',
+			'LOCALE_RACE'	=> 'раса',
 			// quest
 			'LOCALE_REQUIREMENTS'	=>	'Требования',
 			'LOCALE_QUEST_FLAGS_STAY_ALIVE'        => 'Требует оставаться в живых',
@@ -230,6 +233,9 @@ switch($_SESSION['locale'])
 	// --- GERMAN LOCALE ---
 	case '3':
 		mass_define(array(
+			'LOCALE_NAME'	=> 'name',
+			'LOCALE_CLASS'	=> 'klasse',
+			'LOCALE_RACE'	=> 'rennen',
 			// quest
 			'LOCALE_REQUIREMENTS'					=> 'Anforderungen',
 			'LOCALE_QUEST_FLAGS_STAY_ALIVE'			=> '[Requires to stay alive]',
@@ -455,6 +461,9 @@ switch($_SESSION['locale'])
 	// --- FRENCH LOCALE ---
 	case '2':
 		mass_define(array(
+			'LOCALE_NAME'	=> 'nom',
+			'LOCALE_CLASS'	=> 'classe',
+			'LOCALE_RACE'	=> 'course',
 			// quest
 			'LOCALE_REQUIREMENTS'					=>	'Conditions',
 			'LOCALE_QUEST_FLAGS_STAY_ALIVE'			=> 'Nécessite de rester en vie',
@@ -680,6 +689,9 @@ switch($_SESSION['locale'])
 	// --- ENGLISH default LOCALE ---
 	default:
 		mass_define(array(
+			'LOCALE_NAME'	=> 'name',
+			'LOCALE_CLASS'	=> 'class',
+			'LOCALE_RACE'	=> 'race',
 			// quest
 			'LOCALE_REQUIREMENTS'	=>	'Requirements',
 			'LOCALE_QUEST_FLAGS_STAY_ALIVE'        => 'Requires to stay alive',

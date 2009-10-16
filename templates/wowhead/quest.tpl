@@ -195,7 +195,6 @@
 					</td></tr>
 {/if}
 				</table>
-				<script type="text/javascript">ss_appendSticky()</script>
 
 				<div class="text">
 					<a href="http://www.wowhead.com/?{$query}" class="button-red"><em><b><i>Wowhead</i></b><span>Wowhead</span></em></a>

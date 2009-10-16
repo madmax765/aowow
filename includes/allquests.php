@@ -73,43 +73,29 @@ $questcols[QUEST_DATAFLAG_SERIES]	= array('PrevQuestID', 'NextQuestInChain', 'Ex
 $quest_cols[2] = array('entry', 'Title', 'QuestLevel', 'MinLevel', 'RequiredRaces', 'RewChoiceItemId1', 'RewChoiceItemId2', 'RewChoiceItemId3', 'RewChoiceItemId4', 'RewChoiceItemId5', 'RewChoiceItemId6', 'RewChoiceItemCount1', 'RewChoiceItemCount2', 'RewChoiceItemCount3', 'RewChoiceItemCount4', 'RewChoiceItemCount5', 'RewChoiceItemCount6', 'RewItemId1', 'RewItemId2', 'RewItemId3', 'RewItemId4', 'RewItemCount1', 'RewItemCount2', 'RewItemCount3', 'RewItemCount4', 'RewMoneyMaxLevel', 'RewOrReqMoney', 'Type', 'ZoneOrSort', 'QuestFlags');
 $quest_cols[3] = array('Title', 'QuestLevel', 'MinLevel', 'RequiredRaces', 'RewChoiceItemId1', 'RewChoiceItemId2', 'RewChoiceItemId3', 'RewChoiceItemId4', 'RewChoiceItemId5', 'RewChoiceItemId6', 'RewChoiceItemCount1', 'RewChoiceItemCount2', 'RewChoiceItemCount3', 'RewChoiceItemCount4', 'RewChoiceItemCount5', 'RewChoiceItemCount6', 'RewItemId1', 'RewItemId2', 'RewItemId3', 'RewItemId4', 'RewItemCount1', 'RewItemCount2', 'RewItemCount3', 'RewItemCount4', 'RewMoneyMaxLevel', 'RewOrReqMoney', 'Type', 'ZoneOrSort', 'QuestFlags', 'RewRepFaction1', 'RewRepFaction2', 'RewRepFaction3', 'RewRepFaction4', 'RewRepFaction5', 'RewRepValue1', 'RewRepValue2', 'RewRepValue3', 'RewRepValue4', 'RewRepValue5', 'Objectives', 'Details', 'RequestItemsText', 'OfferRewardText', 'ReqCreatureOrGOId1', 'ReqCreatureOrGOId2', 'ReqCreatureOrGOId3', 'ReqCreatureOrGOId4', 'ReqItemId1', 'ReqItemId2', 'ReqItemId3', 'ReqItemId4', 'ReqItemCount1', 'ReqItemCount2', 'ReqItemCount3', 'ReqItemCount4', 'SrcItemId', 'ReqCreatureOrGOCount1', 'ReqCreatureOrGOCount2', 'ReqCreatureOrGOCount3', 'ReqCreatureOrGOCount4', 'ObjectiveText1', 'ObjectiveText2', 'ObjectiveText3', 'ObjectiveText4', 'EndText', 'PrevQuestID', 'NextQuestInChain', 'ExclusiveGroup', 'NextQuestID', 'RewSpellCast', 'RewSpell', 'RequiredSkillValue', 'RepObjectiveFaction', 'RepObjectiveValue', 'SuggestedPlayers', 'LimitTime', 'QuestFlags', 'SpecialFlags', 'CharTitleId', 'RequiredMinRepFaction', 'RequiredMinRepValue', 'RequiredMaxRepFaction', 'RequiredMaxRepValue', 'SrcSpell', 'SkillOrClass', 'ReqSpellCast1', 'ReqSpellCast2', 'ReqSpellCast3', 'ReqSpellCast4');
 
-$locale_quest_cols = array('Title_loc'.$AoWoWconf['locale'], 'Details_loc'.$AoWoWconf['locale'], 'Objectives_loc'.$AoWoWconf['locale'], 'OfferRewardText_loc'.$AoWoWconf['locale'], 'RequestItemsText_loc'.$AoWoWconf['locale'], 'EndText_loc'.$AoWoWconf['locale'], 'ObjectiveText1_loc'.$AoWoWconf['locale'], 'ObjectiveText2_loc'.$AoWoWconf['locale'], 'ObjectiveText3_loc'.$AoWoWconf['locale'], 'ObjectiveText4_loc'.$AoWoWconf['locale']);
-
-function QuestReplaceStr($STR)
+function QuestReplaceStr($str)
 {
-	// TODO: REVAMP THIS AWFUL FUNCTION !!! Omg it's pure crap
-	global $smarty;
-	// сначала заменяем $N, $R, $C
-	$toreplace = array (
-		0=>array('1'=>'$b', '2'=>'<br />',),
-		1=>array('1'=>'$r', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('race')  : 'race'  ).'&gt;',),
-		2=>array('1'=>'$c', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('class') : 'class' ).'&gt;',),
-		3=>array('1'=>'$n', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('name')  : 'name'  ).'&gt;',),
-		4=>array('1'=>'$G', '2'=>'$g',),
-		5=>array('1'=>"\r", '2'=>'',),
-		6=>array('1'=>"\n", '2'=>'',),
-	);
-	for($i=0;$i<=6;$i++)
-	{
-		$STR = str_replace($toreplace[$i][1], $toreplace[$i][2], $STR);
-		$STR = str_replace(strtoupper($toreplace[$i][1]), $toreplace[$i][2], $STR);
-	}
-	// теперь - пол
-	while(strpos($STR, '$g') || strpos($STR, '$G'))
-	{
-		$gPos = strpos($STR, '$g');
-		if(!$gPos)
-			$gPos = strpos($STR, '$G');
-		if($gPos)
-		{
-			$ePos = strpos($STR, ';', $gPos);
-			if(!$ePos)
-				return $STR; // error!
-			$string = explode(':', substr($STR, $gPos+2, $ePos));
-			$STR = substr($STR, 0, $gPos) . $string[0] . substr($STR, $ePos+1, 0xffff);
-		}
-	}
-	return $STR;
+	// Uppercase to lowercase
+	$str = strtr($str, array(
+		'$B'	=> '$b',
+		'$R'	=> '$r',
+		'$C'	=> '$c',
+		'$N'	=> '$n',
+	));
+	// Single ones
+	$str = strtr($str, array(
+		'$N'	=> '$n',
+		'$b'	=> '<br />',
+		'$r'	=> htmlspecialchars('<'.LOCALE_RACE.'>'),
+		'$c'	=> htmlspecialchars('<'.LOCALE_CLASS.'>'),
+		'$n'	=> htmlspecialchars('<'.LOCALE_NAME.'>'),
+		"\r"	=> '',
+		"\n"	=> '',
+	));
+	// Gender
+	$str = preg_replace('/\$g(.*?):(.*?);/iu', htmlspecialchars('<$1/$2>'), $str);
+
+	return $str;
 }
 
 // Информация, возвращаемая этой функцией, очень помогает
@@ -430,10 +416,7 @@ function GetQuestInfo(&$data, $dataflag = QUEST_DATAFLAG_MINIMUM)
 		);
 
 		if($row)
-		{
-			foreach($row as $key => $value)
-				$data[$key] = QuestReplaceStr($value);
-		}
+			$data = array_merge($data, $row);
 	}
 	// Минимальные данные
 	// ID квеста

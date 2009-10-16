@@ -20,7 +20,6 @@
 						</ul>
 					</td></tr>
 				</table>
-				<script type="text/javascript">ss_appendSticky()</script>
 				<div class="text">
 					<h1>{$faction.name}</h1>
 					{$faction.description1}

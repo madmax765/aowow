@@ -1,5 +1,6 @@
 	<title>{if $page.Title}{$page.Title|escape:"html"} - {/if}{$app_name}</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<link rel="SHORTCUT ICON" href="templates/wowhead/images/favicon.ico">
 
 	<link rel="stylesheet" type="text/css" href="templates/wowhead/css/global.css?{$AOWOW_REVISION}" />

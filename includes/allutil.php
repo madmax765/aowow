@@ -1,5 +1,5 @@
 <?php
-define('AOWOW_REVISION', 11);
+define('AOWOW_REVISION', 12);
 
 /* ================ LOADING ================ */
 require_once('configs/config.php');
