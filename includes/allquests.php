@@ -84,7 +84,6 @@ function QuestReplaceStr($str)
 	));
 	// Single ones
 	$str = strtr($str, array(
-		'$N'	=> '$n',
 		'$b'	=> '<br />',
 		'$r'	=> htmlspecialchars('<'.LOCALE_RACE.'>'),
 		'$c'	=> htmlspecialchars('<'.LOCALE_CLASS.'>'),
