@@ -55,7 +55,7 @@ switch($_REQUEST['comment'])
 		// Удаление комментарий (Ajax)
 		// Номер комментария: $_GET['id']
 		// Имя пользователя, удаляющего комментарий: $_GET['username']
-		$id = $_GET['id'];
+		$id = intval($_GET['id']);
 		if(!$DB->selectCell('SELECT 1 FROM ?_comments WHERE id = ?', $id))
 			exit;
 
@@ -67,7 +67,7 @@ switch($_REQUEST['comment'])
 			',
 			$id,
 			$_SESSION['roles'] > 0 ? DBSIMPLE_SKIP : $_SESSION['userid']
-			);
+		);
 		break;
 	case 'edit':
 		// Редактирование комментария
@@ -87,7 +87,6 @@ switch($_REQUEST['comment'])
 				WHERE
 					id = ?d
 					{ AND userid = ?d }
-				LIMIT 1
 			',
 			stripslashes($text),
 			$_SESSION['userid'],

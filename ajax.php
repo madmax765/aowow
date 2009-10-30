@@ -11,7 +11,7 @@ $AoWoWconf['realmd'] = false;
 require_once('includes/db.php');
 
 // Параметры передаваемые скрипту
-@list($what, $id) = explode("=", $_SERVER['QUERY_STRING']);
+@list($what, $id) = explode('=', $_SERVER['QUERY_STRING']);
 $id = intval($id);
 
 $x = '';

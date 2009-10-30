@@ -312,12 +312,12 @@ function spell_desc($spellid, $type='tooltip')
 	global $spell_cols;
 	// Не включать spellduration сюда!!! Не у всех спеллов он установлен корректно.
 	$spellRow = $DB->selectRow('
-		SELECT ?#
-		FROM ?_spell s, ?_spellicons
-		WHERE
-			spellID = ?
-			AND id = spellicon
-		LIMIT 1
+			SELECT ?#
+			FROM ?_spell s, ?_spellicons
+			WHERE
+				spellID = ?
+				AND id = spellicon
+			LIMIT 1
 		',
 		$spell_cols[1],
 		$spellid
@@ -341,9 +341,9 @@ function spell_desc2($spellRow, $type='tooltip')
 	$data = $spellRow[$type.'_loc'.$_SESSION['locale']];
 
 	// Конец строк
-	$data = strtr($data, array("\r" => '', "\n" => "<br />"));
+	$data = strtr($data, array("\r" => '', "\n" => '<br />'));
 	// Цвета
-	$data = preg_replace('/\|cff([a-f0-9]{6})(.+)\|r/i', '<span style="color: #$1;">$2</span>', $data);
+	$data = preg_replace('/\|cff([a-f0-9]{6})(.+?)\|r/i', '<span style="color: #$1;">$2</span>', $data);
 
 	$pos = 0;
 	$str = '';
@@ -393,7 +393,7 @@ function spell_desc2($spellRow, $type='tooltip')
 				$str .= $base;
 				break;
 			case 'z':
-				$str .= '&lt;Home&gt;';
+				$str .= htmlspecialchars('<Home>');
 				break;
 			case 'c':
 				if($lookup > 0 && $exprData[0])
@@ -867,18 +867,18 @@ function allspellsinfo2(&$row, $level=0)
 	}
 
 	// Тултип спелла
-	if($level>0)
+	if($level > 0)
 	{
 		$allspells[$num]['name'] = $row['spellname'];
 		$allspells[$num]['info'] = render_spell_tooltip($row);
 	}
 
-	if($level==1)
+	if($level == 1)
 		return $allspells[$num];
-	elseif($level==2)
+	elseif($level == 2)
 		return $allspells[$num]['info'];
-	else
-		return;
+
+	return NULL;
 }
 
 function spell_buff_render($row)
@@ -888,13 +888,13 @@ function spell_buff_render($row)
 	$x = '<table><tr>';
 	
 	// Имя баффа
-	$x .= '<td><b class="q">'.$row['spellname_loc'.$_SESSION['locale']].'</b></td>';
+	$x .= '<td><b class="q">'.htmlspecialchars($row['spellname_loc'.$_SESSION['locale']]).'</b></td>';
 	
 	// Тип диспела
 	if($row['dispeltypeID'])
 	{
 		$dispel = $DB->selectCell('SELECT name_loc'.$_SESSION['locale'].' FROM ?_spelldispeltype WHERE id=? LIMIT 1', $row['dispeltypeID']);
-		$x .= '<th><b class="q">'.$dispel.'</b></th>';
+		$x .= '<th><b class="q">'.htmlspecialchars($dispel).'</b></th>';
 	}
 	
 	$x .= '</tr></table>';

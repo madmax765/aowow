@@ -132,18 +132,20 @@ function allachievementsinfo2($row, $level = 0)
 {
 	global $allachievements;
 
-	if(isset($allachievements[$row['id']]))
-		return $allachievements[$row['id']];
+	$id = $row['id'];
 
-	$allachievements[$row['id']] = array(
+	if(isset($allachievements[$id]))
+		return $allachievements[$id];
+
+	$allachievements[$id] = array(
 		'icon' => $row['iconname']
 	);
 
 	if($level > 0)
 	{
 		global $DB;
-		$allachievements[$row['id']]['name'] = $row['name'] = $row['name_loc'.$_SESSION['locale']];
-		$allachievements[$row['id']]['description'] = $row['description'] = $row['description_loc'.$_SESSION['locale']];
+		$allachievements[$id]['name'] = $row['name'] = $row['name_loc'.$_SESSION['locale']];
+		$allachievements[$id]['description'] = $row['description'] = $row['description_loc'.$_SESSION['locale']];
 		$criterias = $DB->selectCol('
 				SELECT name_loc?d
 				FROM ?_achievementcriteria
@@ -151,7 +153,7 @@ function allachievementsinfo2($row, $level = 0)
 				ORDER BY `order` ASC
 			',
 			$_SESSION['locale'],
-			$row['id']
+			$id
 		);
 		$tmp = array();
 		$rows = array();
@@ -168,22 +170,25 @@ function allachievementsinfo2($row, $level = 0)
 
 		$x = '';
 		$x .= '<table><tr><td><b class="q">';
-		$x .= $row['name'];
+		$x .= htmlspecialchars($row['name']);
 		$x .= '</b></td></tr></table><table><tr><td><br />';
-		$x .= $row['description'];
+		$x .= htmlspecialchars($row['description']);
 		$x .= '<br /><br /><span class="q">'.LOCALE_CRITERIA.':</span><table width="100%"><tr><td class="q0" style="white-space: nowrap"><small>';
+
 		$i = 0;
 		foreach($rows as $cr)
 		{
 			$x .= '- '.$cr.'<br />';
-			if(++$i == round(count($rows)/2))
+			if(++$i == round(count($rows)/2)) // FIXME
 				$x .= '</small></td><th class="q0" style="white-space: nowrap; text-align: left"><small>';
 		}
 		$x .= '</small></th></tr></table></td></tr></table>';
-		$allachievements[$row['id']]['tooltip'] = $x;
+
+		// Completed
+		$allachievements[$id]['tooltip'] = $x;
 	}
 
-	return $allachievements[$row['id']];
+	return $allachievements[$id];
 }
 
 function achievementinfo2($row)

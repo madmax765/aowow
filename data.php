@@ -86,11 +86,11 @@ switch($_GET['data'])
 						$p_arr[$i]['t'][$dep_links[$talent['id']]]['r'][0] = $j;
 						unset ($dep_links[$talent['id']]);
 					}
-					$j++;
+					++$j;
 				}
 				// Удаляем все зависимости, для которых талант так и не был найден
 				foreach ($dep_links as $dep_link) unset ($p_arr[$i]['t'][$dep_link]['r']);
-				$i++;
+				++$i;
 			}
 
 			save_cache(TALENT_DATA, $class, $p_arr);
