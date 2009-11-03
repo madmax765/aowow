@@ -65,9 +65,6 @@
 				<div id="tabs-generic"></div>
 				<div id="listview-generic" class="listview"></div>
 <script type="text/javascript">
-{if isset($allitems)}{include			file='bricks/allitems_table.tpl'		data=$allitems			}{/if}
-{if isset($allspells)}{include			file='bricks/allspells_table.tpl'		data=$allspells			}{/if}
-{if isset($allachievements)}{include	file='bricks/allachievements_table.tpl'	data=$allachievements	}{/if}
 var tabsRelated = new Tabs({ldelim}parent: ge('tabs-generic'){rdelim});
 {if isset($item.unlocks)}{include				file='bricks/object_table.tpl'			id='unlocks'				tabsid='tabsRelated' data=$item.unlocks				name='unlocks'			}{/if}
 {if isset($item.fishedin)}{include				file='bricks/zone_table.tpl'			id='fished-in'				tabsid='tabsRelated' data=$item.fishedin			name='fishedin'			}{/if}

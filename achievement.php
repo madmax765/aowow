@@ -322,9 +322,6 @@ $smarty->assign('page', $page);
 $smarty->assign('comments', getcomments($page['type'], $page['typeid']));
 // Статистика выполнения mysql запросов
 $smarty->assign('mysql', $DB->getStatistics());
-$smarty->assign('allitems', $allitems);
-$smarty->assign('allspells', $allspells);
-$smarty->assign('allachievements', $allachievements);
 $smarty->assign('achievement', $achievement);
 // Загружаем страницу
 $smarty->display('achievement.tpl');

@@ -50,16 +50,6 @@
 			</script>
 			{/if}
 
-			{* Информация о спеллах для тултипов *}
-			<script type="text/javascript">
-{if $allspells}
-					{include file='bricks/allspells_table.tpl' data=$allspells}
-{/if}
-{if $allitems}
-					{include file='bricks/allitems_table.tpl' data=$allitems}
-{/if}
-			</script>
-
 {if $spell.reagents}{if $spell.tools}<div style="float: left; margin-right: 75px">{/if}
 					<h3>{#Reagents#}</h3>
 					<table class="iconlist">

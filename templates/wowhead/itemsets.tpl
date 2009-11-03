@@ -10,7 +10,6 @@
 
 				<div id="lv-itemsets" class="listview"></div>
 				<script type="text/javascript">
-					{include file='bricks/allitems_table.tpl'	data=$allitems}
 					{include file='bricks/itemset_table.tpl'	data=$itemsets}
 				</script>
 

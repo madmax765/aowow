@@ -27,7 +27,7 @@ switch($what)
 		}
 		$x .= '$WowheadPower.registerItem('.$id.', '.$_SESSION['locale'].', {';
 		if ($item['name'])
-			$x .= 'name: \''.ajax_str_normalize($item['name']).'\',';
+			$x .= 'name_'.$locales[$_SESSION['locale']].': \''.ajax_str_normalize($item['name']).'\',';
 		if ($item['quality'])
 			$x .= 'quality: '.$item['quality'].',';
 		if ($item['icon'])
@@ -45,7 +45,7 @@ switch($what)
 		}
 		$x .= '$WowheadPower.registerSpell('.$id.', '.$_SESSION['locale'].',{';
 		if ($spell['name'])
-			$x .= 'name: \''.ajax_str_normalize($spell['name']).'\',';
+			$x .= 'name_'.$locales[$_SESSION['locale']].': \''.ajax_str_normalize($spell['name']).'\',';
 		if ($spell['icon'])
 			$x .= 'icon: \''.ajax_str_normalize($spell['icon']).'\',';
 		if ($spell['info'])
@@ -62,7 +62,7 @@ switch($what)
 		}
 		$x .= '$WowheadPower.registerQuest('.$id.', '.$_SESSION['locale'].',{';
 		if($quest['name'])
-			$x .= 'name: \''.ajax_str_normalize($quest['name']).'\',';
+			$x .= 'name_'.$locales[$_SESSION['locale']].': \''.ajax_str_normalize($quest['name']).'\',';
 		if($quest['tooltip'])
 			$x .= 'tooltip_'.$locales[$_SESSION['locale']].': \''.ajax_str_normalize($quest['tooltip']).'\'';
 		$x .= '});';

@@ -9,10 +9,9 @@
 
 				<div id="lv-quests" class="listview"></div>
 
-<script type="text/javascript">
-{if isset($allitems)}{include file='bricks/allitems_table.tpl' data=$allitems}{/if}
-{include file='bricks/quest_table.tpl' id='quests' data=$quests}
-</script>
+				<script type="text/javascript">
+					{include file='bricks/quest_table.tpl' id='quests' data=$quests}
+				</script>
 
 				<div class="clear"></div>
 			</div>

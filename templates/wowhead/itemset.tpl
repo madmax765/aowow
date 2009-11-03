@@ -11,15 +11,6 @@
 					g_initPath({$page.path});
 				</script>
 
-				<script type="text/javascript">
-				{if $allitems}
-					{include file='bricks/allitems_table.tpl' data=$allitems}
-				{/if}
-				{if $allspells}
-					{include file='bricks/allspells_table.tpl' data=$allspells}
-				{/if}
-				</script>
-
 				<table class="infobox">
 					<tr><th>{#Quick_Facts#}</th></tr>
 					<tr><td><div class="infobox-spacer"></div>

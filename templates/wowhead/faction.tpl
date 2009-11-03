@@ -31,8 +31,6 @@
 				<div id="tabs-generic"></div>
 				<div id="listview-generic" class="listview"></div>
 				<script type="text/javascript">
-{if isset($allitems)}{include			file='bricks/allitems_table.tpl'		data=$allitems			}{/if}
-{if isset($allachievements)}{include	file='bricks/allachievements_table.tpl'	data=$allachievements	}{/if}
 var tabsRelated = new Tabs({ldelim}parent: ge('tabs-generic'){rdelim});
 {if isset($faction.items)}{include			file='bricks/item_table.tpl'		id='items'			name='items'		tabsid='tabsRelated'	data=$faction.items			}{/if}
 {if isset($faction.npcs)}{include			file='bricks/creature_table.tpl'	id='npcs'			name='members'		tabsid='tabsRelated'	data=$faction.npcs			}{/if}

@@ -10,8 +10,6 @@
 		<div id="tabs-generic"></div>
 		<div id="listview-generic" class="listview"></div>
 <script type="text/javascript">
-{if $allitems}{include		file='bricks/allitems_table.tpl'	data=$allitems}{/if}
-{if $allspells}{include		file='bricks/allspells_table.tpl'	data=$allspells}{/if}
 var myTabs = new Tabs({ldelim}parent: ge('tabs-generic'){rdelim});
 {if $found.item}{include	file='bricks/item_table.tpl'		id='items'		name='items'				tabsid='myTabs' data=$found.item	}{/if}
 {if $found.npc}{include		file='bricks/creature_table.tpl'	id='npcs'		name='npcs'					tabsid='myTabs' data=$found.npc		}{/if}

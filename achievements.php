@@ -71,7 +71,6 @@ $smarty->assign('page', $page);
 
 // Статистика выполнения mysql запросов
 $smarty->assign('mysql', $DB->getStatistics());
-$smarty->assign('allachievements', $allachievements);
 $smarty->assign('achievements', $achievements);
 // Загружаем страницу
 $smarty->display('achievements.tpl');

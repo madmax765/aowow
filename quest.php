@@ -555,10 +555,6 @@ $smarty->assign('comments', getcomments($page['type'], $page['typeid']));
 
 // Данные о квесте
 $smarty->assign('quest', $quest);
-// Если хоть одна информация о вещи найдена - передаём массив с информацией о вещях шаблонизатору
-$smarty->assign('allitems', $allitems);
-$smarty->assign('allspells', $allspells);
-$smarty->assign('allachievements', $allachievements);
 
 // Количество MySQL запросов
 $smarty->assign('mysql', $DB->getStatistics());

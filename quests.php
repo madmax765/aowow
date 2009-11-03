@@ -54,9 +54,6 @@ $page = array(
 );
 $smarty->assign('page', $page);
 
-// Если хоть одна информация о вещи найдена - передаём массив с информацией о вещях шаблонизатору
-$smarty->assign('allitems',$allitems);
-$smarty->assign('quests',$quests);
 // Количество MySQL запросов
 $smarty->assign('mysql', $DB->getStatistics());
 // Загружаем страницу

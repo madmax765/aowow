@@ -58,7 +58,6 @@ $smarty->assign('page', $page);
 
 // Статистика выполнения mysql запросов
 $smarty->assign('mysql', $DB->getStatistics());
-$smarty->assign('allitems', $allitems);
 $smarty->assign('items', $items);
 // Загружаем страницу
 $smarty->display('items.tpl');

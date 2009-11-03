@@ -103,7 +103,7 @@ mass_define(array(
 ));
 
 $achievements_cols = array(
-	0 => array('iconname'),
+	0 => array('iconname', 'name_loc'.$_SESSION['locale']),
 	1 => array('iconname', 'name_loc'.$_SESSION['locale'], 'description_loc'.$_SESSION['locale'], 'count'),
 );
 

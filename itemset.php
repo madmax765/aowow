@@ -82,9 +82,6 @@ $smarty->assign('comments', getcomments($page['type'], $page['typeid']));
 // --Передаем данные шаблонизатору--
 // Количество MySQL запросов
 $smarty->assign('mysql', $DB->getStatistics());
-// Если хоть одна информация о вещи найдена - передаём массив с информацией о вещях шаблонизатору
-$smarty->assign('allitems', $allitems);
-$smarty->assign('allspells', $allspells);
 // Запускаем шаблонизатор
 $smarty->display('itemset.tpl');
 ?>

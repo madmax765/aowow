@@ -10,8 +10,6 @@
 			<div id="lv-spells" class="listview"></div>
 
 			<script type="text/javascript">
-				{if isset($allitems)}{include file='bricks/allitems_table.tpl' data=$allitems}{/if}
-				{if isset($allspells)}{include file='bricks/allspells_table.tpl' data=$allspells}{/if}
 				{include file='bricks/spell_table.tpl' data=$spells id='spells' sort=$page.sort}
 			</script>
 

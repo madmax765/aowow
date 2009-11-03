@@ -31,4 +31,11 @@
 		</div>
 		<div id="topbar-right"><div><form action="."><a href="javascript:;"></a><input name="search" size="35" value="" id="oh2345v5ks" /></form></div></div>
 		<div id="topbar"><span id="kbl34h6b43" class="menu-buttons"></span><div class="clear"></div></div>
-		<script type="text/javascript">g_initHeader({$page.tab}); LiveSearch.attach(ge('oh2345v5ks'));</script>
+		{strip}<script type="text/javascript">
+			g_initHeader({$page.tab});
+			LiveSearch.attach(ge('oh2345v5ks'));
+			{if $allitems}{include			file='bricks/allitems_table.tpl'		data=$allitems			}{/if}
+			{if $allspells}{include			file='bricks/allspells_table.tpl'		data=$allspells			}{/if}
+			{if $allachievements}{include	file='bricks/allachievements_table.tpl'	data=$allachievements	}{/if}
+			{* TODO: Factions, Quests, NPCs, Objects, g_gatheredzones(?) *}
+		</script>{/strip}

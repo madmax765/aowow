@@ -166,9 +166,6 @@ $smarty->assign('comments', getcomments($page['type'], $page['typeid']));
 
 // Данные о квесте
 $smarty->assign('faction', $faction);
-// Если хоть одна информация о вещи найдена - передаём массив с информацией о вещях шаблонизатору
-$smarty->assign('allitems', $allitems);
-$smarty->assign('allachievements', $allachievements);
 
 // Количество MySQL запросов
 $smarty->assign('mysql', $DB->getStatistics());

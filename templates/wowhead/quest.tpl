@@ -11,12 +11,6 @@
 					g_initPath([0,3,{$quest.maincat},{$quest.category}]);
 				</script>
 
-				<script type="text/javascript">
-					{if isset($allitems)}{include			file='bricks/allitems_table.tpl'		data=$allitems			}{/if}
-					{if isset($allspells)}{include			file='bricks/allspells_table.tpl'		data=$allspells			}{/if}
-					{if isset($allachievements)}{include	file='bricks/allachievements_table.tpl'	data=$allachievements	}{/if}
-				</script>
-
 				<table class="infobox">
 					<tr><th>{#Quick_Facts#}</th></tr>
 					<tr><td>

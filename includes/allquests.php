@@ -517,4 +517,16 @@ function GetQuestInfo(&$data, $dataflag = QUEST_DATAFLAG_MINIMUM)
 	// Все ОК. Это не обязательный return, но в некоторых функциях нужен.
 	return $data;
 }
+
+// just a placeholder
+function allquestinfo($id)
+{
+	global $allquests;
+
+	if(!$allquests[$id])
+		$allquests[$id] = GetQuestInfo($id, QUEST_DATAFLAG_MINIMUM);
+
+	return $allquests[$id];
+}
+
 ?>

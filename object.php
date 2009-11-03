@@ -112,8 +112,6 @@ $smarty->assign('comments', getcomments($page['type'], $page['typeid']));
 
 // Количество MySQL запросов
 $smarty->assign('mysql', $DB->getStatistics());
-$smarty->assign('allitems', $allitems);
-$smarty->assign('allachievements', $allachievements);
 
 $smarty->assign('object', $object);
 $smarty->display('object.tpl');

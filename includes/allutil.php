@@ -538,4 +538,39 @@ function load_cache($type, $type_id, $prefix = '')
 
 	return unserialize($data[1]);
 }
+
+// another placeholder
+function ParseTextLinks($text)
+{
+	if(!preg_match_all('/(\[(achievement|item|quest|spell)=(\d+)\])/', $text, &$matches))
+		return;
+
+	$types = $matches[2];
+	$ids = $matches[3];
+
+	foreach($types as $i => $type)
+	{
+		$id = $ids[$i];
+		switch($type)
+		{
+			case 'achievement':
+				require_once('includes/allachievements.php');
+				allachievementsinfo($id);
+				break;
+			case 'item':
+				require_once('includes/allitems.php');
+				allitemsinfo($id);
+				break;
+			case 'quest':
+				require_once('includes/allquests.php');
+				allquestinfo($id);
+				break;
+			case 'spell':
+				require_once('includes/allspells.php');
+				allspellsinfo($id);
+				break;
+		}
+	}
+}
+
 ?>
