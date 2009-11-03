@@ -297,7 +297,7 @@ $pet_skill_categories = array(
 270, 653, 210, 655, 211, 213, 209, 780, 787, 214, 212, 781, 763, 215, 654, 775, 764, 217, 767, 786, 236, 768, 783, 203, 788, 765, 218, 251, 766, 785, 656, 208, 784, 761, 189, 188, 205, 204, 782
 );
 
-$spell_cols[0] = array('spellID', 'iconname', 'effect1itemtype', 'effect1Aura');
+$spell_cols[0] = array('spellID', 'iconname', 'effect1itemtype', 'effect1Aura', 'spellname_loc'.$_SESSION['locale']);
 $spell_cols[1] = array('spellID', 'iconname', 'tooltip_loc'.$_SESSION['locale'], 'spellname_loc'.$_SESSION['locale'], 'rank_loc'.$_SESSION['locale'], 'rangeID', 'manacost', 'manacostpercent', 'spellcasttimesID', 'cooldown', 'tool1', 'tool2', 'reagent1', 'reagent2', 'reagent3', 'reagent4', 'reagent5', 'reagent6', 'reagent7', 'reagent8', 'effect1BasePoints', 'effect2BasePoints', 'effect3BasePoints', 'effect1Amplitude', 'effect2Amplitude', 'effect3Amplitude', 'effect1DieSides', 'effect2DieSides', 'effect3DieSides', 'effect1ChainTarget', 'effect2ChainTarget', 'effect3ChainTarget', 'reagentcount1', 'reagentcount2', 'reagentcount3', 'reagentcount4', 'reagentcount5', 'reagentcount6', 'reagentcount7', 'reagentcount8', 'effect1radius', 'effect2radius', 'effect3radius', 'effect1MiscValue', 'effect2MiscValue', 'effect3MiscValue', 'ChannelInterruptFlags', 'procChance', 'procCharges', 'effect_1_proc_chance', 'effect_2_proc_chance', 'effect_3_proc_chance', 'effect1itemtype', 'effect1Aura', 'spellTargets', 'dmg_multiplier1', 'durationID');
 $spell_cols[2] = array('spellname_loc'.$_SESSION['locale'], 'rank_loc'.$_SESSION['locale'], 'levelspell', 'resistancesID', 'effect1itemtype', 'effect2itemtype', 'effect3itemtype', 'effect1BasePoints', 'effect2BasePoints', 'effect3BasePoints', 'reagent1', 'reagent2', 'reagent3', 'reagent4', 'reagent5', 'reagent6', 'reagent7', 'reagent8', 'reagentcount1', 'reagentcount2', 'reagentcount3', 'reagentcount4', 'reagentcount5', 'reagentcount6', 'reagentcount7', 'reagentcount8', 'iconname', 'effect1Aura', 'effect2Aura', 'effect3Aura');
 
@@ -866,12 +866,11 @@ function allspellsinfo2(&$row, $level=0)
 		$allspells[$num]['icon'] = $row['iconname'];
 	}
 
+	$allspells[$num]['name'] = $row['spellname'];
+
 	// Тултип спелла
 	if($level > 0)
-	{
-		$allspells[$num]['name'] = $row['spellname'];
 		$allspells[$num]['info'] = render_spell_tooltip($row);
-	}
 
 	if($level == 1)
 		return $allspells[$num];
@@ -919,8 +918,8 @@ function allspellsinfo($id, $level=0)
 	global $DB;
 	global $allspells;
 	global $spell_cols;
-	if(isset($allitems[$id]))
-		return $allitems[$id];
+	if(isset($allspells[$id]))
+		return $allspells[$id];
 	$row = $DB->selectRow('
 		SELECT ?#
 		FROM ?_spell s, ?_spellicons i
