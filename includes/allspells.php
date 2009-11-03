@@ -866,7 +866,7 @@ function allspellsinfo2(&$row, $level=0)
 		$allspells[$num]['icon'] = $row['iconname'];
 	}
 
-	$allspells[$num]['name'] = $row['spellname'];
+	$allspells[$num]['name'] = $row['spellname_loc'.$_SESSION['locale']];
 
 	// Тултип спелла
 	if($level > 0)
